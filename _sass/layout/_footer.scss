@@ -102,3 +102,9 @@
     }
   }
 }
+
+// El pie no tapa el contenido en pantallas grandes
+.page__footer {
+  position: relative !important;
+  bottom: auto !important;
+}
