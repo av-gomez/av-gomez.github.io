@@ -1,23 +1,19 @@
 ---
 layout: archive
-title: "Sitemap"
+title: "Mapa del sitio"
 permalink: /sitemap/
 author_profile: true
 ---
 
 {% include base_path %}
 
-A list of all the posts and pages found on the site. For you robots out there, there is an [XML version]({{ base_path }}/sitemap.xml) available for digesting as well.
+Todas las páginas del sitio. También hay una [versión XML]({{ base_path }}/sitemap.xml).
 
-<h2>Pages</h2>
+<h2>Páginas</h2>
 {% for post in site.pages %}
   {% include archive-single.html %}
 {% endfor %}
 
-<h2>Posts</h2>
-{% for post in site.posts %}
-  {% include archive-single.html %}
-{% endfor %}
 
 {% capture written_label %}'None'{% endcapture %}
 
