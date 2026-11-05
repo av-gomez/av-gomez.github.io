@@ -5,7 +5,7 @@ body{margin:0;background:var(--crema);color:var(--tinta);font:400 17px/1.55 Inte
 img{display:block;max-width:100%}
 a{color:inherit}
 h1,h2,h3{font-family:"Bricolage Grotesque",Inter,sans-serif;line-height:1.05;margin:0}
-h2{font-size:clamp(30px,4.4vw,52px);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(30px,4.4vw,52px);font-weight:800;letter-spacing:-.01em}
 code{background:rgba(23,21,59,.08);padding:.08em .35em;border-radius:5px;font-size:.88em}
 .saltar{position:absolute;left:-999px}.saltar:focus{left:12px;top:12px;background:#fff;padding:8px;z-index:30}
 :focus-visible{outline:3px solid var(--tinta);outline-offset:2px}
@@ -26,7 +26,7 @@ code{background:rgba(23,21,59,.08);padding:.08em .35em;border-radius:5px;font-si
 .hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.14) 1.5px,transparent 1.5px);background-size:24px 24px;pointer-events:none}
 .hero-texto{position:relative;align-self:center;padding-bottom:clamp(30px,5vw,70px)}
 .sobre{display:inline-block;margin:0 0 16px;padding:4px 14px;border:2px solid var(--amarillo);border-radius:99px;color:var(--amarillo);font-weight:700;font-size:14px}
-.hero h1{font-size:clamp(58px,9.2vw,128px);font-weight:800;letter-spacing:-.035em;line-height:.92}
+.hero h1{font-size:clamp(58px,9.2vw,128px);font-weight:800;letter-spacing:-.02em;line-height:.95}
 .hero h1 em{font-style:normal;color:var(--amarillo)}
 .bio{max-width:37em;font-size:clamp(17px,1.6vw,20px);margin:22px 0 26px;color:#E7E5F5}
 .botones{display:flex;flex-wrap:wrap;gap:10px}
@@ -106,7 +106,7 @@ code{background:rgba(23,21,59,.08);padding:.08em .35em;border-radius:5px;font-si
 .herramientas span{padding:5px 13px;background:var(--tinta);color:#fff;border-radius:8px;font-size:14px;font-weight:500}
 
 .pcabeza,.interior{padding:clamp(30px,5vw,60px) max(clamp(16px,3vw,30px),calc((100vw - var(--ancho))/2 + 30px));background:var(--c);color:var(--ct);border-bottom:3px solid var(--tinta)}
-.pcabeza h1,.interior h1{max-width:18em;font-size:clamp(36px,6vw,72px);font-weight:800;letter-spacing:-.025em;margin:12px 0}
+.pcabeza h1,.interior h1{max-width:18em;font-size:clamp(36px,6vw,72px);font-weight:800;letter-spacing:-.015em;margin:12px 0}
 .volver{font-weight:700;text-decoration:none}.volver:hover{text-decoration:underline}
 .ppregunta{max-width:36em;margin:0 0 22px;font-size:clamp(18px,2vw,23px)}
 .pcabeza .pill-fuerte,.interior .pill-fuerte{background:#fff;color:var(--tinta)}
@@ -173,5 +173,12 @@ code{background:rgba(23,21,59,.08);padding:.08em .35em;border-radius:5px;font-si
  .stat{border-bottom:2px solid rgba(23,21,59,.18)}
  .demo iframe{height:560px}
  .rejilla{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+ .barra{flex-wrap:wrap;row-gap:6px;padding:9px 16px}
+ .barra nav{width:100%;justify-content:space-between}
+ .vecinos{grid-template-columns:1fr}
+ .vecinos a:last-child{text-align:left}
+ .pub{flex-direction:column}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}

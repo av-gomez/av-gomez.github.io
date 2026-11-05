@@ -240,7 +240,8 @@ def pills(p, con_detalle=True):
     out = []
     for lab, url in p["links"]:
         u = f'/proyectos/{p["slug"]}/{url}' if url.startswith("#") else url
-        out.append(f'<a class="pill pill-fuerte" href="{u}"{link_attr(u)}>{e(lab)} <span aria-hidden="true">↗</span></a>')
+        flecha = ' <span aria-hidden="true">↗</span>' if u.startswith("http") else ""
+        out.append(f'<a class="pill pill-fuerte" href="{u}"{link_attr(u)}>{e(lab)}{flecha}</a>')
     if con_detalle:
         out.append(f'<a class="pill" href="/proyectos/{p["slug"]}/">Ver detalle</a>')
     return "".join(out)
