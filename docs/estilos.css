@@ -250,3 +250,25 @@ h2{font-size:clamp(21px,2.3vw,27px)}
  .demo iframe{height:480px}
 }
 @media (max-width:520px){.barra nav{font-size:13px}}
+
+/* MARGENES: encabezado, portada y proyectos comparten el mismo borde y usan todo el ancho */
+:root{--ancho:none;--b:clamp(16px,3.2vw,56px)}
+.barra,.hero{padding-inline:var(--b)}
+.destacados,.filtro,.ruta,.tipo-cabeza,.rejilla,.piezas .titular,.pcuerpo,.demo,.galeria,.resumen,.vecinos,.pubs,.cv{max-width:none;padding-inline:var(--b)}
+.carrusel{padding-inline:var(--b)}
+.pcabeza,.interior{padding-inline:var(--b)}
+.cinta{padding-inline:var(--b)}
+.cinta:not(:first-child){padding-inline:clamp(12px,2vw,28px)}
+.rejilla{display:flex;flex-wrap:wrap;gap:18px}
+.rejilla>.caja{flex:1 1 240px;max-width:560px}
+.bento{gap:18px}
+.subgrupo{margin-top:26px}
+.subgrupo h3{font-size:18px;font-weight:800}
+.subgrupo p{font-size:13px}
+.subgrupo a{font-weight:700;text-decoration-color:var(--c);text-decoration-thickness:3px;text-underline-offset:3px}
+.cubre::after{inset:25% 0 0;background:linear-gradient(transparent,rgba(23,21,59,.97) 60%)}
+.pimg{max-width:720px}
+.pieza{flex-grow:1}
+.carrusel{justify-content:space-between}
+.cinta{min-width:0}
+@media (max-width:860px){.rejilla>.caja{max-width:none;flex-basis:100%}.cinta,.cinta:not(:first-child){padding-inline:16px}}

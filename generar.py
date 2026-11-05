@@ -146,36 +146,50 @@ PROYECTOS = [
          f'Como coordinadora de investigación académica reviso que los textos estén bien escritos, tengan buen contenido académico y puedan pasar por otros expertos. Algunas columnas que revisé: {L("PBI y bienestar social","https://www.instagram.com/p/DYkuoJrFgam/")}, {L("vouchers y educación pública","https://www.instagram.com/p/DOY-XBbDgQp/")} y {L("polarización y derechos humanos","https://www.instagram.com/p/DdmeCgHltEh/")}.'],
   galeria=[("les-semaforo-educacion.webp","Semáforo aplicado a educación"),("les-propuestas-verde.webp","Guía Propuestas en verde"),("les-nakama.webp","Conversatorio Nakama y nación")]),
 
- dict(slug="ra-guerrero", tipo="inv",
-  titulo="Asistente de investigación con Isabel Guerrero y Fabiola Alba-Vivar",
-  pregunta="¿Qué datos permiten estudiar pensiones, salud y movilidad urbana?",
-  num="1,060", num_label="bases auditadas de 54 países", img="lis-combinaciones.webp", alt="Dashboard del LIS, vista de combinaciones sugeridas",
-  stats=[("118","variables auditadas"),("1,060","bases de datos"),("3","líneas de trabajo"),("6 meses","marzo a agosto de 2026")],
-  links=[("Dashboard LIS","/proyectos/lis-dashboard/"),("Investigación de Alba-Vivar","https://fabiolaalbavivar.com/research")],
-  texto=['Departamento de Economía, PUCP. Trabajé en tres líneas:',
-         f'<strong>Pensiones y salud:</strong> auditoría del {L("Luxembourg Income Study","/proyectos/lis-dashboard/")} para un estudio sobre pensiones no contributivas y gasto de bolsillo en salud, y el dashboard de disponibilidad.',
-         '<strong>Movilidad urbana, educación y bienestar:</strong> análisis de datos con econometría y geolocalización en Python.',
-         '<strong>Diagnósticos:</strong> revisión sistemática de literatura y análisis mixto para diagnósticos económicos.'],
+ dict(slug="ra-misfits", tipo="inv", grupo="ra", con="Isabel Guerrero",
+  titulo="Reglas en uso y gobernanza forestal en la Amazonía",
+  pregunta="¿Cómo diagnosticar desajustes entre las reglas formales y las que se usan en el bosque?",
+  num="929 mil ha", num_label="de bosque tropical en la cuenca del Aguaytía", img="portadas/ra-misfits.webp", alt="Portada: bosque amazónico en Padre Abad, Ucayali",
+  stats=[("929 mil ha","bosque tropical, cuenca del Aguaytía"),("-27 %","bosque primario, 2002 a 2025"),("Padre Abad","caso de estudio en Ucayali")],
+  links=[],
+  texto=['Asistencia de investigación en el estudio <em>Rules-in-Use as Evidence of Institutional Fit</em>, de Cathy Rubiños e Isabel Guerrero, sobre por qué persiste el incumplimiento entre pequeñas empresas forestales que buscan formalizarse.',
+         'Es un estudio de caso cualitativo basado en entrevistas de campo. Las reglas formales y las reglas en uso se codifican con Institutional Grammar.'],
+  nota="Estudio en curso: aquí no se muestran sus resultados. Las cifras describen la zona de estudio."),
+ dict(slug="ra-movilidad", tipo="inv", grupo="ra", con="Guerrero y Alba-Vivar",
+  titulo="Movilidad urbana, educación y bienestar",
+  pregunta="¿Cómo se relaciona la movilidad en la ciudad con la educación y el bienestar?",
+  num="Python", num_label="econometría y geolocalización", img="portadas/ra-movilidad.webp", alt="Portada: rutas sobre una ciudad",
+  stats=[("Python","análisis y geolocalización"),("Econometría","método principal"),("6 meses","marzo a agosto de 2026")],
+  links=[("Investigación de Alba-Vivar","https://fabiolaalbavivar.com/research")],
+  texto=['Con las profesoras Isabel Guerrero y Fabiola Alba-Vivar, analicé datos de movilidad urbana, educación y bienestar con econometría y geolocalización en Python.'],
   nota="Aquí no se muestran resultados no publicados de esta investigación."),
- dict(slug="ra-francke", tipo="inv",
-  titulo="Asistente de investigación con Pedro Francke",
-  pregunta="¿Cómo usar microdatos censales para estudiar la maternidad infantil y la interseccionalidad?",
+ dict(slug="ra-francke", tipo="inv", grupo="ra", con="Pedro Francke",
+  titulo="Maternidad infantil e interseccionalidad con microdatos censales",
+  pregunta="¿Cómo usar microdatos censales para estudiar la maternidad infantil?",
   num="Censos", num_label="microdatos procesados en Stata", img="portadas/ra-francke.webp", alt="Portada: Stata y microdatos censales",
   stats=[("4 meses","diciembre de 2025 a marzo de 2026"),("Stata","lenguaje del análisis"),("Censos","fuente de los datos")],
   links=[("Mi tesis con él","/proyectos/tesis-proveedor-salud/")],
   texto=['En la PUCP procesé microdatos censales en Stata y trabajé en modelos econométricos sobre maternidad infantil e interseccionalidad.',
          f'Pedro Francke también es el asesor de {L("mi tesis","/proyectos/tesis-proveedor-salud/")}.'],
   nota="Aquí no se muestran resultados no publicados de esta investigación."),
- dict(slug="ra-ipa", tipo="inv",
-  titulo="Practicante de investigación en IPA Perú",
-  pregunta="¿Qué implica apoyar día a día una evaluación de impacto?",
-  num="3 frentes", num_label="RCT, desarrollo de proyectos y piloto cualitativo", img="portadas/ra-ipa.webp", alt="Portada: puntos divididos en dos grupos, la idea de un RCT",
-  stats=[("3","frentes de trabajo"),("ago. 2026","inicio en IPA Perú"),("RCT","tipo de evaluación")],
+ dict(slug="ipa-emc", tipo="inv", grupo="ra", con="IPA Perú",
+  titulo="Eligiendo mi Camino: evaluación de tutores de IA en colegios de Lima",
+  pregunta="¿Qué efecto tiene un tutor de IA en estudiantes de 5.º de secundaria?",
+  num="105 colegios", num_label="en la línea final 2, en cuatro zonas de Lima", img="portadas/ipa-emc.webp", alt="Portada: tres grupos de colegios en un diseño experimental",
+  stats=[("105","colegios en la línea final 2"),("3","grupos: dos tutores y control"),("149","sesiones cualitativas organizadas, de 95 colegios")],
+  links=[("Programa en el Banco Mundial","https://www.worldbank.org/en/country/peru/brief/eligiendo-mi-camino"),("IPA Perú","https://www.poverty-action.org/peru")],
+  texto=['IPA evalúa este programa, financiado por el Banco Mundial, con un diseño experimental. Tiene un tutor de matemáticas y un tutor vocacional con IA.',
+         '<strong>Qué hago:</strong> corregí el dashboard del reporte de avance, hago seguimiento al tracker de agendamiento y preparé en Overleaf la presentación de capacitación para encuestadores. Antes organicé los audios del componente cualitativo.'],
+  nota="Evaluación en curso: aquí solo aparecen el diseño general y mis tareas, sin resultados ni datos."),
+ dict(slug="ipa-eib", tipo="inv", grupo="ra", con="IPA Perú",
+  titulo="Encuesta a docentes de Escuelas Interculturales Bilingües",
+  pregunta="¿Cómo se forman y qué prácticas tienen los docentes que enseñan en dos lenguas?",
+  num="4 países", num_label="con el mismo instrumento: Ecuador, Guatemala, Surinam y Perú", img="portadas/ipa-eib.webp", alt="Portada: cuatro países de la encuesta",
+  stats=[("4","países con el mismo instrumento"),("SurveyCTO","recolección"),("Stata","limpieza y reportes"),("R Shiny","dashboard de avance")],
   links=[("IPA Perú","https://www.poverty-action.org/peru")],
-  texto=['<strong>Evaluación de impacto:</strong> apoyo en un RCT sobre capital semilla para microemprendimientos: actualización de reportes en LaTeX para los investigadores principales y control de referencias de tablas.',
-         '<strong>Desarrollo de proyectos:</strong> fortalecimiento de la matriz de emparejamiento entre ideas de investigación y fondos, y notas conceptuales para donantes.',
-         '<strong>Piloto cualitativo:</strong> apoyo en un piloto con gobiernos locales (entrevistas semiestructuradas y notas de campo).'],
-  nota="Son estudios no publicados: aquí solo aparecen mi rol y el tipo de tarea, sin resultados ni datos."),
+  texto=['Estudio comparativo financiado por el BID. La encuesta es autoadministrada y pregunta por formación, dominio de la lengua, relación con la comunidad, prácticas del modelo EIB, materiales e intención de seguir enseñando.',
+         '<strong>Qué hago:</strong> actualizo el reporte Perú y Surinam (descarga desde SurveyCTO, limpieza y reportes en Stata) y el dashboard de avance de Perú en R Shiny.'],
+  nota="Estudio en curso: aquí solo aparecen el diseño general y mis tareas, sin resultados ni datos."),
 
  dict(slug="rikuy-salud", tipo="imp",
   titulo="Rikuy Salud: orientarse en el sistema de salud público",
@@ -229,7 +243,7 @@ UI_ES = dict(proyectos="Proyectos", publicaciones="Publicaciones", cv="CV", pdf=
     p2n="Departamento de Economía, PUCP", p3n="Laboratorio de Estudios Sociales", herr=["Stata","R y Quarto","Python","SQL","SurveyCTO","LaTeX","GitHub Actions","Claude Code"],
     que="Qué hice", prueba="Pruébalo aquí", resumen="Resumen de la tesis", anterior="Anterior", siguiente="Siguiente",
     pub_sub="Tesis, estudios de caso y documentos de trabajo.", leer_resumen="Leer resumen", leer_estudio="Leer estudio",
-    cv_bajar="Descargar PDF", no_existe="Esta página no existe", volver="Volver al inicio")
+    ra_t="Asistencia de investigación", ra_s="Proyectos en los que apoyo o apoyé a otros investigadores. Con Isabel Guerrero también hice el dashboard del", cv_bajar="Descargar PDF", no_existe="Esta página no existe", volver="Volver al inicio")
 
 LANG = "es"
 def U(k): return (UI_ES if LANG == "es" else EN.UI)[k]
@@ -318,12 +332,17 @@ def pills(p, con_detalle=True):
         out.append(f'<a class="pill" href="/proyectos/{p["slug"]}/">{U("detalle")}</a>')
     return "".join(out)
 
+def etiqueta(p):
+    if p.get("con"):
+        return ("Con " if LANG == "es" else "With ") + p["con"]
+    return tipo_nombre(p["tipo"])
+
 def tarjeta(p0):
     p = tr(p0)
     return f"""<article class="caja tipo-{p["tipo"]}">
   <a class="cubre" href="/proyectos/{p["slug"]}/" aria-label="{e(p["titulo"])}">
     <img src="/images/portadas/{p["slug"]}.webp" alt="{e(p["alt"])}" loading="lazy">
-    <span class="etiqueta">{e(tipo_nombre(p["tipo"]))}</span>
+    <span class="etiqueta">{e(etiqueta(p))}</span>
     <span class="cifra"><b>{e(p["num"])}</b><small>{e(p["num_label"])}</small></span>
   </a>
   <div class="caja-cuerpo">
@@ -340,10 +359,12 @@ def inicio():
     for k, _, _ in TIPOS:
         resto = [p for p in PROYECTOS if p["tipo"] == k and not p.get("destacado")]
         top = [p for p in PROYECTOS if p["tipo"] == k and p.get("destacado")]
+        asist = [p for p in resto if p.get("grupo") == "ra"]
+        ra = (f'<div class="tipo-cabeza subgrupo"><h3>{U("ra_t")}</h3><p>{U("ra_s")} <a href="/proyectos/lis-dashboard/">LIS</a>.</p></div><div class="rejilla">{"".join(tarjeta(p) for p in asist)}</div>') if asist else ""
         aviso = f'<p class="tambien">{U("destacado")} <a href="/proyectos/{top[0]["slug"]}/">{e(tr(top[0])["titulo"])}</a></p>' if top else ""
         secciones += f'''<section class="tipo-seccion tipo-{k}" id="{k}">
   <div class="tipo-cabeza"><h2>{e(tipo_nombre(k))}</h2><p>{e(tipo_desc(k))}</p>{aviso}</div>
-  <div class="rejilla">{"".join(tarjeta(p) for p in resto)}</div>
+  <div class="rejilla">{"".join(tarjeta(p) for p in resto if not p.get("grupo"))}</div>{ra}
 </section>'''
     nombres = [a for _, a, _ in PIEZAS] if LANG == "es" else EN.PIEZAS
     piezas = "".join(f'<a class="pieza" href="{u}"{link_attr(u)}><img src="/images/{i}" alt="{e(n)}" loading="lazy"><span>{e(n)}</span></a>' for (i, _, u), n in zip(PIEZAS, nombres))
@@ -390,8 +411,8 @@ def inicio():
 <section class="ruta">
   <div class="titular"><h2>{U("donde")}</h2><p><a href="/cv/">{U("cv_completo")}</a></p></div>
   <div class="ruta-cajas">
-    <a class="paso tipo-ia" href="/proyectos/ra-ipa/"><small>{U("p1f")}</small><b>IPA Perú</b>{U("p1")}</a>
-    <a class="paso tipo-datos" href="/proyectos/ra-guerrero/"><small>{U("p2f")}</small><b>{U("p2n")}</b>{U("p2")}</a>
+    <a class="paso tipo-ia" href="/proyectos/ipa-emc/"><small>{U("p1f")}</small><b>IPA Perú</b>{U("p1")}</a>
+    <a class="paso tipo-datos" href="/proyectos/lis-dashboard/"><small>{U("p2f")}</small><b>{U("p2n")}</b>{U("p2")}</a>
     <a class="paso tipo-inv" href="/proyectos/elecciones-edicion-les/"><small>{U("p3f")}</small><b>{U("p3n")}</b>{U("p3")}</a>
     <a class="paso tipo-imp" href="/proyectos/180dc-gestion/"><small>{U("p4f")}</small><b>180 Degrees Consulting PUCP</b>{U("p4")}</a>
   </div>
@@ -460,13 +481,16 @@ def bloque(titulo, tipo, entradas):
 def cv_es(PJ):
     return [
  ("Experiencia en investigación","ia",[
-  (L("Innovations for Poverty Action (IPA) Perú",PJ+"ra-ipa/"),"Practicante de Investigación · ago. 2026 - presente",[
+  (L("Innovations for Poverty Action (IPA) Perú","https://www.poverty-action.org/peru"),"Practicante de Investigación · ago. 2026 - presente",[
+    L("Eligiendo mi Camino",PJ+"ipa-emc/")+" (Banco Mundial): dashboard del reporte de avance, seguimiento al tracker de agendamiento, capacitación de encuestadores y organización de audios cualitativos.",
+    L("Encuesta a docentes EIB",PJ+"ipa-eib/")+" (BID): descarga desde SurveyCTO, limpieza y reportes en Stata; dashboard de avance en R Shiny.",
     "Apoyo en una evaluación de impacto (RCT) sobre capital semilla para microemprendimientos: actualización de reportes en LaTeX para los investigadores principales y control de referencias de tablas.",
     "Desarrollo de proyectos: fortalecimiento de la matriz de emparejamiento entre ideas de investigación y fondos, y notas conceptuales para donantes.",
     "Apoyo en un piloto cualitativo con gobiernos locales (entrevistas semiestructuradas y notas de campo)."]),
-  (L("Departamento de Economía, PUCP",PJ+"ra-guerrero/"),f'Asistente de Investigación, Profs. Isabel Guerrero y {L("Fabiola Alba-Vivar","https://fabiolaalbavivar.com/")} · mar. 2026 - ago. 2026',[
+  ("Departamento de Economía, PUCP",f'Asistente de Investigación, Profs. Isabel Guerrero y {L("Fabiola Alba-Vivar","https://fabiolaalbavivar.com/")} · mar. 2026 - ago. 2026',[
     L("Auditoría de 118 variables del Luxembourg Income Study",PJ+"lis-dashboard/")+" en 1,060 bases de 54 países para un estudio sobre pensiones no contributivas y gasto de bolsillo en salud; dashboard web de disponibilidad de variables.",
-    "Análisis de datos de movilidad urbana, educación y bienestar con econometría y geolocalización en Python.",
+    L("Análisis de datos de movilidad urbana, educación y bienestar",PJ+"ra-movilidad/")+" con econometría y geolocalización en Python.",
+    L("Gobernanza forestal en la Amazonía",PJ+"ra-misfits/")+": asistencia en el estudio de Cathy Rubiños e Isabel Guerrero.",
     "Revisión sistemática de literatura y análisis mixto para diagnósticos económicos."]),
   (L("PUCP",PJ+"ra-francke/"),"Asistente de Investigación, Prof. Pedro Francke · dic. 2025 - mar. 2026",["Procesamiento de microdatos censales en Stata y modelos econométricos sobre maternidad infantil e interseccionalidad."]),
   ("PUCP","Asistente de Investigación · ago. 2025 - nov. 2025",["Revisión de literatura y marco teórico sobre liderazgo político femenino y violencia contra la mujer."]),
