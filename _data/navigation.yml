@@ -3,7 +3,7 @@ main:
     url: /
 
   - title: "Proyectos"
-    url: /portfolio/
+    url: /proyectos/
 
   - title: "Publicaciones"
     url: /publications/

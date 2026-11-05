@@ -41,7 +41,7 @@ Practicante de Investigación · ago. 2026 - presente
 **Departamento de Economía (DECON), PUCP**, Lima
 Asistente de Investigación, Profs. Isabel Guerrero y [Fabiola Alba-Vivar](https://fabiolaalbavivar.com/) · mar. 2026 - ago. 2026
 
-- [Auditoría de 118 variables del Luxembourg Income Study](/portfolio/01-lis-dashboard/) en 1,060 bases de 54 países para un estudio sobre pensiones no contributivas y gasto de bolsillo en salud; dashboard web de disponibilidad de variables.
+- [Auditoría de 118 variables del Luxembourg Income Study](/proyectos/01-lis-dashboard/) en 1,060 bases de 54 países para un estudio sobre pensiones no contributivas y gasto de bolsillo en salud; dashboard web de disponibilidad de variables.
 - Análisis de datos de movilidad urbana, educación y bienestar con econometría y geolocalización en Python.
 - Revisión sistemática de literatura y análisis mixto para diagnósticos económicos.
 
@@ -57,13 +57,13 @@ Asistente de Investigación · ago. 2025 - nov. 2025
 
 ## Consultoría, emprendimiento y liderazgo
 
-**[180 Degrees Consulting PUCP](/portfolio/15-180dc-gestion/)** · Consultora y directora de finanzas · ago. 2025 - presente
+**[180 Degrees Consulting PUCP](/proyectos/15-180dc-gestion/)** · Consultora y directora de finanzas · ago. 2025 - presente
 
 - Consultora de estrategia del proyecto Sálvame Pucallpa (ciclo 2025-2): diagnóstico organizacional y estrategia de recaudación de fondos para una ONG.
 - Directora de finanzas: organización de una rifa pro fondos y de los talleres Conexión 180.
 - Desarrollo del [Portal de Transparencia Financiera](https://av-gomez.github.io/sitio_180dc/) del grupo (Python, GitHub Actions).
 
-**[Laboratorio de Estudios Sociales (LES), PUCP](/portfolio/13-les-elecciones-edicion/)** · Coordinadora de Investigación Académica · mar. 2025 - presente
+**[Laboratorio de Estudios Sociales (LES), PUCP](/proyectos/13-les-elecciones-edicion/)** · Coordinadora de Investigación Académica · mar. 2025 - presente
 
 - Líneas de investigación sobre pobreza de tiempo y género; supervisión de publicaciones estudiantiles; traducción de resultados técnicos a notas de política.
 
@@ -71,7 +71,7 @@ Asistente de Investigación · ago. 2025 - nov. 2025
 
 - Startup B2B de verificación de identidad digital; costos unitarios por verificación y modelo de negocio. Programa de incubación NEXPRO 2026-2 (NEXUM, CIDE PUCP).
 
-**[Rikuy Salud](/portfolio/14-rikuy-salud/)** · Cofundadora · 2026
+**[Rikuy Salud](/proyectos/14-rikuy-salud/)** · Cofundadora · 2026
 
 - Idea de app para orientar a pacientes en el sistema de salud público peruano (datos abiertos de RENIPRESS y SUSALUD). Laboratorio de Emprendimientos 2026, EQUIPU PUCP. Equipo de cinco personas.
 

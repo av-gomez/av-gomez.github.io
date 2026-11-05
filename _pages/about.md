@@ -9,23 +9,23 @@ redirect_from:
 
 Estudiante de último ciclo de Economía en la PUCP y practicante de investigación en IPA Perú. Uso microdatos peruanos, econometría aplicada y evaluación de impacto para estudiar salud, desarrollo y políticas sociales.
 
-[Descargar CV (PDF)](/files/CV_Amanda_Gomez_Flores.pdf){: .btn .btn--primary} [Ver proyectos](/portfolio/){: .btn}
+[Descargar CV (PDF)](/files/CV_Amanda_Gomez_Flores.pdf){: .btn .btn--primary} [Ver proyectos](/proyectos/){: .btn}
 
 ## Proyectos destacados
 
-**[Dashboard de variables del LIS para 54 países](/portfolio/01-lis-dashboard/)**
+**[Dashboard de variables del LIS para 54 países](/proyectos/01-lis-dashboard/)**
 118 variables auditadas en 1,060 bases de datos para estudiar pensiones no contributivas y gasto en salud.
 
-**[Portal de transparencia financiera de 180DC PUCP](/portfolio/02-portal-180dc/)**
+**[Portal de transparencia financiera de 180DC PUCP](/proyectos/02-portal-180dc/)**
 Un sitio que se genera solo desde Excel con Python y GitHub Actions; 6 informes mensuales que cuadran mes a mes.
 
-**[Tesis: ¿a dónde acude un peruano cuando se enferma?](/portfolio/03-tesis-proveedor-salud/)**
+**[Tesis: ¿a dónde acude un peruano cuando se enferma?](/proyectos/03-tesis-proveedor-salud/)**
 50.8 % no busca atención. El SIS se asocia con 17.2 puntos porcentuales más de uso del sistema público. ENAHO Panel 2022-2024.
 
-**[Skills de Claude Code para la ENAHO 2024](/portfolio/04-skills-enaho/)**
+**[Skills de Claude Code para la ENAHO 2024](/proyectos/04-skills-enaho/)**
 Limpian los microdatos y replican la pobreza oficial: 27.58 %, frente a 27.6 % del INEI.
 
-[Ver los 15 proyectos](/portfolio/){: .btn}
+[Ver los 15 proyectos](/proyectos/){: .btn}
 
 ## Sobre mí
 
