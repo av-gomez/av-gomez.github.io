@@ -248,15 +248,13 @@ def pills(p, con_detalle=True):
 
 def tarjeta(p, grande=False):
     t = TIPO[p["tipo"]]
-    fit = " ajustar" if p.get("fit") == "contain" else ""
-    osc = " oscuro" if p.get("oscuro") else ""
     return f'''<article class="caja tipo-{p["tipo"]}{' grande' if grande else ''}">
-  <a class="caja-img{fit}{osc}" href="/proyectos/{p["slug"]}/" aria-label="{e(p["titulo"])}">
-    <img src="/images/{p["img"]}" alt="{e(p["alt"])}" loading="lazy">
+  <a class="portada" href="/proyectos/{p["slug"]}/" aria-label="{e(p["titulo"])}">
+    <img src="/images/portadas/{p["slug"]}.webp" alt="{e(p["alt"])}" loading="lazy">
+    <span class="etiqueta">{e(t[1])}</span>
+    <span class="cifra"><b>{e(p["num"])}</b><small>{e(p["num_label"])}</small></span>
   </a>
   <div class="caja-cuerpo">
-    <span class="etiqueta">{e(t[1])}</span>
-    <div class="cifra"><b>{e(p["num"])}</b><span>{e(p["num_label"])}</span></div>
     <h3><a href="/proyectos/{p["slug"]}/">{e(p["titulo"])}</a></h3>
     <p>{e(p["pregunta"])}</p>
     <div class="pills">{pills(p)}</div>
