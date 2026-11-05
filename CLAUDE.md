@@ -4,7 +4,7 @@ Sitio personal de Amanda Gomez Flores (Economía PUCP, IPA Perú), hecho con aca
 
 ## Dónde va cada cosa
 - Inicio: _pages/about.md
-- Proyectos: _portfolio/ (una tarjeta por archivo; el campo order define el orden, el mejor primero)
+- Proyectos: _portfolio/ (una tarjeta por archivo; el campo order define el orden, el mejor primero). Se publican en /proyectos/ porque /portfolio/ lo ocupa el repo antiguo av-gomez/portfolio
 - Publicaciones: _publications/
 - CV web: _pages/cv.md; CV en PDF: files/CV_Amanda_Gomez_Flores.pdf
 - Fotos y figuras: images/ (JPG o WebP, menos de 400 KB)

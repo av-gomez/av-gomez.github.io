@@ -17,4 +17,4 @@ order: 3
 
 **Contexto.** Tesis de licenciatura en Economía, PUCP. Asesor: Pedro Francke. Obtuve el primer puesto (1/87) en Seminario de Tesis 1.
 
-[Leer el resumen de la tesis](/publication/2026-tesis-proveedor-salud){: .btn .btn--primary} [Datos: microdatos del INEI](https://proyectos.inei.gob.pe/microdatos/){: .btn}
+[Leer el resumen de la tesis](/publication/2026-tesis-proveedor-salud){: .btn .btn--primary} [Fuente de los datos: INEI](https://www.inei.gob.pe/){: .btn}
