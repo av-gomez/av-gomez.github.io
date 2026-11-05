@@ -4,6 +4,7 @@ Sitio personal de Amanda Gomez Flores (Economía PUCP, IPA Perú). Es HTML y CSS
 
 ## Dónde va cada cosa
 - Contenido (proyectos, CV, publicaciones): `generar.py`. Para agregar un proyecto, suma un diccionario a `PROYECTOS`.
+- Versión en inglés: `contenido_en.py`, con las mismas claves que `PROYECTOS`. Todo proyecto nuevo debe tener su entrada ahí.
 - Diseño: `docs/estilos.css`. Cada tipo de proyecto tiene su color (`.tipo-datos`, `.tipo-ia`, `.tipo-inv`, `.tipo-imp`).
 - Fotos y figuras: `docs/images/` (JPG o WebP, menos de 400 KB).
 - PDFs y reportes: `docs/files/`.

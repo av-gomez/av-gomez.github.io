@@ -1,6 +1,7 @@
 # Genera el sitio estatico en docs/. Uso: python generar.py
 # Para agregar un proyecto: suma un diccionario a PROYECTOS y vuelve a correr este archivo.
-import html, os, shutil
+import html, os, re, shutil
+import contenido_en as EN
 
 DOCS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "docs")
 SITE = "https://av-gomez.github.io"
@@ -16,7 +17,7 @@ POST_LES = "https://lespucp.wixsite.com/laboratorio-de-estud/post/el-tiempo-que-
 TIPOS = [
     ("datos", "Dashboards y datos", "Sitios que cualquiera puede abrir, filtrar y revisar."),
     ("ia", "IA y agentes", "Herramientas de Claude Code, modelos y texto extraído de archivos."),
-    ("inv", "Investigación", "Preguntas de salud, género y brechas con microdatos."),
+    ("inv", "Investigación", "Preguntas de salud, género y brechas con microdatos, y mis asistencias de investigación."),
     ("imp", "Impacto y gestión", "Organizaciones estudiantiles, emprendimiento y rendición de cuentas."),
 ]
 
@@ -145,6 +146,37 @@ PROYECTOS = [
          f'Como coordinadora de investigación académica reviso que los textos estén bien escritos, tengan buen contenido académico y puedan pasar por otros expertos. Algunas columnas que revisé: {L("PBI y bienestar social","https://www.instagram.com/p/DYkuoJrFgam/")}, {L("vouchers y educación pública","https://www.instagram.com/p/DOY-XBbDgQp/")} y {L("polarización y derechos humanos","https://www.instagram.com/p/DdmeCgHltEh/")}.'],
   galeria=[("les-semaforo-educacion.webp","Semáforo aplicado a educación"),("les-propuestas-verde.webp","Guía Propuestas en verde"),("les-nakama.webp","Conversatorio Nakama y nación")]),
 
+ dict(slug="ra-guerrero", tipo="inv",
+  titulo="Asistente de investigación con Isabel Guerrero y Fabiola Alba-Vivar",
+  pregunta="¿Qué datos permiten estudiar pensiones, salud y movilidad urbana?",
+  num="1,060", num_label="bases auditadas de 54 países", img="lis-combinaciones.webp", alt="Dashboard del LIS, vista de combinaciones sugeridas",
+  stats=[("118","variables auditadas"),("1,060","bases de datos"),("3","líneas de trabajo"),("6 meses","marzo a agosto de 2026")],
+  links=[("Dashboard LIS","/proyectos/lis-dashboard/"),("Investigación de Alba-Vivar","https://fabiolaalbavivar.com/research")],
+  texto=['Departamento de Economía, PUCP. Trabajé en tres líneas:',
+         f'<strong>Pensiones y salud:</strong> auditoría del {L("Luxembourg Income Study","/proyectos/lis-dashboard/")} para un estudio sobre pensiones no contributivas y gasto de bolsillo en salud, y el dashboard de disponibilidad.',
+         '<strong>Movilidad urbana, educación y bienestar:</strong> análisis de datos con econometría y geolocalización en Python.',
+         '<strong>Diagnósticos:</strong> revisión sistemática de literatura y análisis mixto para diagnósticos económicos.'],
+  nota="Aquí no se muestran resultados no publicados de esta investigación."),
+ dict(slug="ra-francke", tipo="inv",
+  titulo="Asistente de investigación con Pedro Francke",
+  pregunta="¿Cómo usar microdatos censales para estudiar la maternidad infantil y la interseccionalidad?",
+  num="Censos", num_label="microdatos procesados en Stata", img="portadas/ra-francke.webp", alt="Portada: Stata y microdatos censales",
+  stats=[("4 meses","diciembre de 2025 a marzo de 2026"),("Stata","lenguaje del análisis"),("Censos","fuente de los datos")],
+  links=[("Mi tesis con él","/proyectos/tesis-proveedor-salud/")],
+  texto=['En la PUCP procesé microdatos censales en Stata y trabajé en modelos econométricos sobre maternidad infantil e interseccionalidad.',
+         f'Pedro Francke también es el asesor de {L("mi tesis","/proyectos/tesis-proveedor-salud/")}.'],
+  nota="Aquí no se muestran resultados no publicados de esta investigación."),
+ dict(slug="ra-ipa", tipo="inv",
+  titulo="Practicante de investigación en IPA Perú",
+  pregunta="¿Qué implica apoyar día a día una evaluación de impacto?",
+  num="3 frentes", num_label="RCT, desarrollo de proyectos y piloto cualitativo", img="portadas/ra-ipa.webp", alt="Portada: puntos divididos en dos grupos, la idea de un RCT",
+  stats=[("3","frentes de trabajo"),("ago. 2026","inicio en IPA Perú"),("RCT","tipo de evaluación")],
+  links=[("IPA Perú","https://www.poverty-action.org/peru")],
+  texto=['<strong>Evaluación de impacto:</strong> apoyo en un RCT sobre capital semilla para microemprendimientos: actualización de reportes en LaTeX para los investigadores principales y control de referencias de tablas.',
+         '<strong>Desarrollo de proyectos:</strong> fortalecimiento de la matriz de emparejamiento entre ideas de investigación y fondos, y notas conceptuales para donantes.',
+         '<strong>Piloto cualitativo:</strong> apoyo en un piloto con gobiernos locales (entrevistas semiestructuradas y notas de campo).'],
+  nota="Son estudios no publicados: aquí solo aparecen mi rol y el tipo de tarea, sin resultados ni datos."),
+
  dict(slug="rikuy-salud", tipo="imp",
   titulo="Rikuy Salud: orientarse en el sistema de salud público",
   pregunta="¿Cómo ayudar a un paciente a saber a qué establecimiento ir?",
@@ -182,16 +214,55 @@ PUBLICACIONES = [
 RESUMEN_TESIS = open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"resumen_tesis.txt"),encoding="utf-8").read().strip()
 
 e = html.escape
-BY_SLUG = {p["slug"]: p for p in PROYECTOS}
 TIPO = {t[0]: t for t in TIPOS}
+UI_ES = dict(proyectos="Proyectos", publicaciones="Publicaciones", cv="CV", pdf="PDF", saltar="Saltar al contenido",
+    correo="Correo", cv_pdf="CV en PDF", lima="Lima, Perú", detalle="Ver detalle",
+    sobre="Economía · Datos · Salud y desarrollo", descargar="Descargar CV", ver="Ver proyectos",
+    f1="países en un dashboard", f2="aciertos con mi MCP", f3="Seminario de Tesis 1",
+    c1="bases auditadas", c2="observaciones en mi tesis", c3="pobreza replicada de la ENAHO", c4="informes financieros públicos",
+    mejores="Mis tres mejores proyectos", mejores_sub="Abre la demo, mira el código o entra al detalle.",
+    todos="Todos los proyectos, por tipo", destacado="Destacado de este tipo:",
+    piezas="Investigación convertida en piezas para todos", piezas_sub="Parte de lo que coordiné y apoyé en el",
+    les="Laboratorio de Estudios Sociales", donde="Dónde he trabajado", cv_completo="Ver el CV completo",
+    p1="Practicante de investigación", p2="Asistente de investigación", p3="Coordinadora de investigación académica", p4="Consultora y directora de finanzas",
+    p1f="ago. 2026 - presente", p2f="mar. - ago. 2026", p3f="mar. 2025 - presente", p4f="ago. 2025 - presente",
+    p2n="Departamento de Economía, PUCP", p3n="Laboratorio de Estudios Sociales", herr=["Stata","R y Quarto","Python","SQL","SurveyCTO","LaTeX","GitHub Actions","Claude Code"],
+    que="Qué hice", prueba="Pruébalo aquí", resumen="Resumen de la tesis", anterior="Anterior", siguiente="Siguiente",
+    pub_sub="Tesis, estudios de caso y documentos de trabajo.", leer_resumen="Leer resumen", leer_estudio="Leer estudio",
+    cv_bajar="Descargar PDF", no_existe="Esta página no existe", volver="Volver al inicio")
+
+LANG = "es"
+def U(k): return (UI_ES if LANG == "es" else EN.UI)[k]
+def BIOT(): return BIO if LANG == "es" else EN.BIO
+def tipo_nombre(k): return TIPO[k][1] if LANG == "es" else EN.TIPOS[k][0]
+def tipo_desc(k): return TIPO[k][2] if LANG == "es" else EN.TIPOS[k][1]
+
+def tr(p):
+    """Devuelve el proyecto en el idioma actual."""
+    if LANG == "es":
+        return p
+    t = EN.P[p["slug"]]; q = dict(p)
+    for k in ("titulo", "pregunta", "num_label", "alt", "texto"):
+        q[k] = t[k]
+    q["num"] = t.get("num", p["num"])
+    ns = t.get("num_stats", {})
+    q["stats"] = [(ns.get(i, n), t["stats"][i]) for i, (n, _) in enumerate(p["stats"])]
+    q["links"] = [(t["links"][i], u) for i, (_, u) in enumerate(p["links"])]
+    q["nota"] = t.get("nota")
+    if p.get("galeria"):
+        q["galeria"] = [(a, t["galeria"][i]) for i, (a, _) in enumerate(p["galeria"])]
+    return q
 
 def link_attr(u):
     return ' target="_blank" rel="noopener"' if u.startswith("http") else ""
 
-def pagina(ruta, titulo, cuerpo, desc=BIO, clase=""):
+def pagina(ruta, titulo, cuerpo, desc=None):
+    desc = desc or BIOT()
     full = f"{titulo} | {NOMBRE}" if titulo != NOMBRE else NOMBRE
+    ruta_es, ruta_en = ruta, "/en" + ruta
+    otro = ruta_en if LANG == "es" else ruta_es
     return f'''<!doctype html>
-<html lang="es">
+<html lang="{LANG}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -200,36 +271,37 @@ def pagina(ruta, titulo, cuerpo, desc=BIO, clase=""):
 <meta property="og:title" content="{e(full)}">
 <meta property="og:description" content="{e(desc)}">
 <meta property="og:image" content="{SITE}/images/foto.jpg">
-<meta property="og:url" content="{SITE}{ruta}">
+<meta property="og:url" content="{SITE}{ruta_es if LANG == 'es' else ruta_en}">
+<link rel="alternate" hreflang="es" href="{SITE}{ruta_es}">
+<link rel="alternate" hreflang="en" href="{SITE}{ruta_en}">
 <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/estilos.css">
 </head>
-<body class="{clase}">
-<a class="saltar" href="#contenido">Saltar al contenido</a>
+<body>
+<a class="saltar" href="#contenido">{U("saltar")}</a>
 <header class="barra">
   <a class="marca" href="/"><span class="punto"></span>Amanda Gomez</a>
   <nav>
-    <a href="/#proyectos">Proyectos</a>
-    <a href="/publicaciones/">Publicaciones</a>
-    <a href="/cv/">CV</a>
-    <a class="cta" href="{CV_PDF}">PDF</a>
+    <a href="/#proyectos">{U("proyectos")}</a>
+    <a href="/publicaciones/">{U("publicaciones")}</a>
+    <a href="/cv/">{U("cv")}</a>
+    <a class="cta" href="{CV_PDF}">{U("pdf")}</a>
+    <span class="idioma"><a data-fijo href="{ruta_es}"{' class="activo" aria-current="true"' if LANG == 'es' else ''} lang="es">ES</a><a data-fijo href="{ruta_en}"{' class="activo" aria-current="true"' if LANG == 'en' else ''} lang="en">EN</a></span>
   </nav>
 </header>
 <main id="contenido">
 {cuerpo}
 </main>
 <footer class="pie">
-  <div>
-    <strong>{NOMBRE}</strong><br>Lima, Perú
-  </div>
+  <div><strong>{NOMBRE}</strong><br>{U("lima")}</div>
   <div class="pie-links">
-    <a href="mailto:{CORREO}">Correo</a>
+    <a href="mailto:{CORREO}">{U("correo")}</a>
     <a href="{GITHUB}" target="_blank" rel="noopener">GitHub</a>
     <a href="{LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a>
-    <a href="{CV_PDF}">CV en PDF</a>
+    <a href="{CV_PDF}">{U("cv_pdf")}</a>
   </div>
 </footer>
 </body>
@@ -243,15 +315,15 @@ def pills(p, con_detalle=True):
         flecha = ' <span aria-hidden="true">↗</span>' if u.startswith("http") else ""
         out.append(f'<a class="pill pill-fuerte" href="{u}"{link_attr(u)}>{e(lab)}{flecha}</a>')
     if con_detalle:
-        out.append(f'<a class="pill" href="/proyectos/{p["slug"]}/">Ver detalle</a>')
+        out.append(f'<a class="pill" href="/proyectos/{p["slug"]}/">{U("detalle")}</a>')
     return "".join(out)
 
-def tarjeta(p, grande=False):
-    t = TIPO[p["tipo"]]
-    return f'''<article class="caja tipo-{p["tipo"]}{' grande' if grande else ''}">
-  <a class="portada" href="/proyectos/{p["slug"]}/" aria-label="{e(p["titulo"])}">
+def tarjeta(p0):
+    p = tr(p0)
+    return f"""<article class="caja tipo-{p["tipo"]}">
+  <a class="cubre" href="/proyectos/{p["slug"]}/" aria-label="{e(p["titulo"])}">
     <img src="/images/portadas/{p["slug"]}.webp" alt="{e(p["alt"])}" loading="lazy">
-    <span class="etiqueta">{e(t[1])}</span>
+    <span class="etiqueta">{e(tipo_nombre(p["tipo"]))}</span>
     <span class="cifra"><b>{e(p["num"])}</b><small>{e(p["num_label"])}</small></span>
   </a>
   <div class="caja-cuerpo">
@@ -259,94 +331,96 @@ def tarjeta(p, grande=False):
     <p>{e(p["pregunta"])}</p>
     <div class="pills">{pills(p)}</div>
   </div>
-</article>'''
+</article>"""
 
 def inicio():
     dest = [p for p in PROYECTOS if p.get("destacado")]
-    chips = "".join(f'<a class="chip tipo-{k}" href="#{k}">{e(n)} <small>{sum(p["tipo"]==k for p in PROYECTOS)}</small></a>' for k, n, _ in TIPOS)
+    chips = "".join(f'<a class="chip tipo-{k}" href="#{k}">{e(tipo_nombre(k))} <small>{sum(p["tipo"]==k for p in PROYECTOS)}</small></a>' for k, _, _ in TIPOS)
     secciones = ""
-    for k, n, d in TIPOS:
+    for k, _, _ in TIPOS:
         resto = [p for p in PROYECTOS if p["tipo"] == k and not p.get("destacado")]
         top = [p for p in PROYECTOS if p["tipo"] == k and p.get("destacado")]
-        aviso = f'<p class="tambien">Destacado de este tipo: <a href="/proyectos/{top[0]["slug"]}/">{e(top[0]["titulo"])}</a></p>' if top else ""
+        aviso = f'<p class="tambien">{U("destacado")} <a href="/proyectos/{top[0]["slug"]}/">{e(tr(top[0])["titulo"])}</a></p>' if top else ""
         secciones += f'''<section class="tipo-seccion tipo-{k}" id="{k}">
-  <div class="tipo-cabeza"><h2>{e(n)}</h2><p>{e(d)}</p>{aviso}</div>
+  <div class="tipo-cabeza"><h2>{e(tipo_nombre(k))}</h2><p>{e(tipo_desc(k))}</p>{aviso}</div>
   <div class="rejilla">{"".join(tarjeta(p) for p in resto)}</div>
 </section>'''
-    piezas = "".join(f'<a class="pieza" href="{u}"{link_attr(u)}><img src="/images/{i}" alt="{e(a)}" loading="lazy"><span>{e(a)}</span></a>' for i, a, u in PIEZAS)
+    nombres = [a for _, a, _ in PIEZAS] if LANG == "es" else EN.PIEZAS
+    piezas = "".join(f'<a class="pieza" href="{u}"{link_attr(u)}><img src="/images/{i}" alt="{e(n)}" loading="lazy"><span>{e(n)}</span></a>' for (i, _, u), n in zip(PIEZAS, nombres))
     c = f'''<section class="hero">
   <div class="hero-texto">
-    <p class="sobre">Economía · Datos · Salud y desarrollo</p>
+    <p class="sobre">{U("sobre")}</p>
     <h1>Amanda<br>Gomez <em>Flores</em></h1>
-    <p class="bio">{e(BIO)}</p>
+    <p class="bio">{e(BIOT())}</p>
     <div class="botones">
-      <a class="boton amarillo" href="{CV_PDF}">Descargar CV</a>
-      <a class="boton" href="#proyectos">Ver proyectos</a>
+      <a class="boton amarillo" href="{CV_PDF}">{U("descargar")}</a>
+      <a class="boton" href="#proyectos">{U("ver")}</a>
       <a class="boton linea" href="{GITHUB}" target="_blank" rel="noopener">GitHub</a>
       <a class="boton linea" href="{LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a>
-      <a class="boton linea" href="mailto:{CORREO}">Correo</a>
+      <a class="boton linea" href="mailto:{CORREO}">{U("correo")}</a>
     </div>
   </div>
   <div class="hero-foto">
     <div class="sol"></div>
-    <img src="/images/foto-recorte.webp" alt="Foto de Amanda Gomez Flores">
-    <a class="flota f1 tipo-datos" href="/proyectos/lis-dashboard/"><b>54</b> países en un dashboard</a>
-    <a class="flota f2 tipo-ia" href="/proyectos/mcp-bcrp/"><b>10/10</b> aciertos con mi MCP</a>
-    <a class="flota f3 tipo-inv" href="/proyectos/tesis-proveedor-salud/"><b>1/87</b> Seminario de Tesis 1</a>
+    <img src="/images/foto-recorte.webp" alt="Amanda Gomez Flores">
+    <a class="flota f1 tipo-datos" href="/proyectos/lis-dashboard/"><b>54</b> {U("f1")}</a>
+    <a class="flota f2 tipo-ia" href="/proyectos/mcp-bcrp/"><b>10/10</b> {U("f2")}</a>
+    <a class="flota f3 tipo-inv" href="/proyectos/tesis-proveedor-salud/"><b>1/87</b> {U("f3")}</a>
   </div>
 </section>
 <section class="cintas">
-  <a class="cinta tipo-datos" href="/proyectos/lis-dashboard/"><b>1,060</b>bases auditadas</a>
-  <a class="cinta tipo-inv" href="/proyectos/tesis-proveedor-salud/"><b>17,339</b>observaciones en mi tesis</a>
-  <a class="cinta tipo-ia" href="/proyectos/skills-enaho/"><b>27.58 %</b>pobreza replicada de la ENAHO</a>
-  <a class="cinta tipo-imp" href="/proyectos/portal-180dc/"><b>6</b>informes financieros públicos</a>
+  <a class="cinta tipo-datos" href="/proyectos/lis-dashboard/"><b>1,060</b>{U("c1")}</a>
+  <a class="cinta tipo-inv" href="/proyectos/tesis-proveedor-salud/"><b>17,339</b>{U("c2")}</a>
+  <a class="cinta tipo-ia" href="/proyectos/skills-enaho/"><b>27.58 %</b>{U("c3")}</a>
+  <a class="cinta tipo-imp" href="/proyectos/portal-180dc/"><b>6</b>{U("c4")}</a>
 </section>
 <section class="destacados" id="proyectos">
-  <div class="titular"><h2>Mis tres mejores proyectos</h2><p>Abre la demo, mira el código o entra al detalle.</p></div>
-  <div class="bento">{tarjeta(dest[0], True)}{tarjeta(dest[1])}{tarjeta(dest[2])}</div>
+  <div class="titular"><h2>{U("mejores")}</h2><p>{U("mejores_sub")}</p></div>
+  <div class="bento">{"".join(tarjeta(p) for p in dest)}</div>
 </section>
 <section class="filtro">
-  <h2>Todos los proyectos, por tipo</h2>
+  <h2>{U("todos")}</h2>
   <div class="chips">{chips}</div>
 </section>
 {secciones}
 <section class="piezas">
-  <div class="titular claro"><h2>Investigación convertida en piezas para todos</h2><p>Parte de lo que coordiné y apoyé en el <a href="https://lespucp.wixsite.com/laboratorio-de-estud" target="_blank" rel="noopener">Laboratorio de Estudios Sociales</a>.</p></div>
+  <div class="titular claro"><h2>{U("piezas")}</h2><p>{U("piezas_sub")} <a href="https://lespucp.wixsite.com/laboratorio-de-estud" target="_blank" rel="noopener">{U("les")}</a>.</p></div>
   <div class="carrusel">{piezas}</div>
 </section>
 <section class="ruta">
-  <div class="titular"><h2>Dónde he trabajado</h2><p><a href="/cv/">Ver el CV completo</a></p></div>
+  <div class="titular"><h2>{U("donde")}</h2><p><a href="/cv/">{U("cv_completo")}</a></p></div>
   <div class="ruta-cajas">
-    <a class="paso tipo-ia" href="https://www.poverty-action.org/peru" target="_blank" rel="noopener"><small>ago. 2026 - presente</small><b>IPA Perú</b>Practicante de investigación</a>
-    <a class="paso tipo-datos" href="/proyectos/lis-dashboard/"><small>mar. - ago. 2026</small><b>Departamento de Economía, PUCP</b>Asistente de investigación</a>
-    <a class="paso tipo-inv" href="/proyectos/pobreza-de-tiempo/"><small>mar. 2025 - presente</small><b>Laboratorio de Estudios Sociales</b>Coordinadora de investigación académica</a>
-    <a class="paso tipo-imp" href="/proyectos/180dc-gestion/"><small>ago. 2025 - presente</small><b>180 Degrees Consulting PUCP</b>Consultora y directora de finanzas</a>
+    <a class="paso tipo-ia" href="/proyectos/ra-ipa/"><small>{U("p1f")}</small><b>IPA Perú</b>{U("p1")}</a>
+    <a class="paso tipo-datos" href="/proyectos/ra-guerrero/"><small>{U("p2f")}</small><b>{U("p2n")}</b>{U("p2")}</a>
+    <a class="paso tipo-inv" href="/proyectos/elecciones-edicion-les/"><small>{U("p3f")}</small><b>{U("p3n")}</b>{U("p3")}</a>
+    <a class="paso tipo-imp" href="/proyectos/180dc-gestion/"><small>{U("p4f")}</small><b>180 Degrees Consulting PUCP</b>{U("p4")}</a>
   </div>
-  <div class="herramientas">{"".join(f"<span>{h}</span>" for h in ["Stata","R y Quarto","Python","SQL","SurveyCTO","LaTeX","GitHub Actions","Claude Code"])}</div>
+  <div class="herramientas">{"".join(f"<span>{h}</span>" for h in U("herr"))}</div>
 </section>'''
-    return pagina("/", NOMBRE, c, clase="portada")
+    return pagina("/", NOMBRE, c)
 
-def proyecto(p, i):
-    t = TIPO[p["tipo"]]
+def proyecto(p0, i):
+    p = tr(p0)
     stats = "".join(f'<div class="stat"><b>{e(n)}</b><span>{e(l)}</span></div>' for n, l in p["stats"])
     txt = "".join(f"<p>{x}</p>" for x in p["texto"])
     fit = " ajustar" if p.get("fit") == "contain" else ""
     osc = " oscuro" if p.get("oscuro") else ""
     demo = ""
     if p.get("demo"):
-        demo = f'''<section class="demo"><h2>Pruébalo aquí</h2><iframe src="{p["demo"]}" title="{e(p["titulo"])}" loading="lazy"></iframe></section>'''
+        demo = f'<section class="demo"><h2>{U("prueba")}</h2><iframe src="{p["demo"]}" title="{e(p["titulo"])}" loading="lazy"></iframe></section>'
     gal = ""
     if p.get("galeria"):
         gal = '<section class="galeria">' + "".join(f'<figure><a href="/images/{a}"><img src="/images/{a}" alt="{e(b)}" loading="lazy"></a><figcaption>{e(b)}</figcaption></figure>' for a, b in p["galeria"]) + "</section>"
-    resumen = f'<section class="resumen" id="resumen"><h2>Resumen de la tesis</h2><p>{e(RESUMEN_TESIS)}</p></section>' if p.get("resumen") else ""
+    res_txt = RESUMEN_TESIS if LANG == "es" else EN.RESUMEN
+    resumen = f'<section class="resumen" id="resumen"><h2>{U("resumen")}</h2><p>{e(res_txt)}</p></section>' if p.get("resumen") else ""
     nota = f'<p class="nota">{e(p["nota"])}</p>' if p.get("nota") else ""
     video = ""
     if p.get("video"):
         video = f'\n<!-- Cuando el video esté en YouTube como no listado, pega aquí:\n<iframe width="100%" height="400" src="https://www.youtube.com/embed/ID_DEL_VIDEO" title="{e(p["video"])}" allowfullscreen></iframe>\n-->\n'
-    ant = PROYECTOS[i-1]; sig = PROYECTOS[(i+1) % len(PROYECTOS)]
+    ant = tr(PROYECTOS[i-1]); sig = tr(PROYECTOS[(i+1) % len(PROYECTOS)])
     c = f'''<div class="tipo-{p["tipo"]}">
 <section class="pcabeza">
-  <a class="volver" href="/#{p["tipo"]}">← {e(t[1])}</a>
+  <a class="volver" href="/#{p["tipo"]}">← {e(tipo_nombre(p["tipo"]))}</a>
   <h1>{e(p["titulo"])}</h1>
   <p class="ppregunta">{e(p["pregunta"])}</p>
   <div class="pills">{pills(p, False)}</div>
@@ -354,23 +428,27 @@ def proyecto(p, i):
 <section class="stats">{stats}</section>
 <div class="pcuerpo">
   <a class="pimg{fit}{osc}" href="/images/{p["img"]}"><img src="/images/{p["img"]}" alt="{e(p["alt"])}"></a>
-  <div class="ptexto"><h2>Qué hice</h2>{txt}{nota}</div>
+  <div class="ptexto"><h2>{U("que")}</h2>{txt}{nota}</div>
 </div>
 {demo}{video}{gal}{resumen}
 <nav class="vecinos">
-  <a href="/proyectos/{ant["slug"]}/"><small>Anterior</small>{e(ant["titulo"])}</a>
-  <a href="/proyectos/{sig["slug"]}/"><small>Siguiente</small>{e(sig["titulo"])}</a>
+  <a href="/proyectos/{ant["slug"]}/"><small>{U("anterior")}</small>{e(ant["titulo"])}</a>
+  <a href="/proyectos/{sig["slug"]}/"><small>{U("siguiente")}</small>{e(sig["titulo"])}</a>
 </nav>
 </div>'''
     return pagina(f'/proyectos/{p["slug"]}/', p["titulo"], c, desc=p["pregunta"])
 
 def publicaciones():
     items = ""
-    for anio, tit, cita, url, lab, tp in PUBLICACIONES:
-        b = f'<div class="pills"><a class="pill pill-fuerte" href="{url}"{link_attr(url)}>{lab} <span aria-hidden="true">↗</span></a></div>' if url else ""
+    for i, (anio, tit, cita, url, lab, tp) in enumerate(PUBLICACIONES):
+        if LANG == "en":
+            cita = EN.PUBLICACIONES[i]
+            lab = {"Leer resumen": U("leer_resumen"), "Leer estudio": U("leer_estudio")}.get(lab, lab)
+        flecha = ' <span aria-hidden="true">↗</span>' if url and url.startswith("http") else ""
+        b = f'<div class="pills"><a class="pill pill-fuerte" href="{url}"{link_attr(url)}>{lab}{flecha}</a></div>' if url else ""
         items += f'<article class="pub tipo-{tp}"><span class="anio">{anio}</span><div><h2>{e(tit)}</h2><p>{e(cita)}</p>{b}</div></article>'
-    c = f'<section class="interior tipo-inv"><h1>Publicaciones</h1><p class="ppregunta">Tesis, estudios de caso y documentos de trabajo.</p></section><section class="pubs">{items}</section>'
-    return pagina("/publicaciones/", "Publicaciones", c)
+    c = f'<section class="interior tipo-inv"><h1>{U("publicaciones")}</h1><p class="ppregunta">{U("pub_sub")}</p></section><section class="pubs">{items}</section>'
+    return pagina("/publicaciones/", U("publicaciones"), c)
 
 def bloque(titulo, tipo, entradas):
     filas = ""
@@ -379,28 +457,29 @@ def bloque(titulo, tipo, entradas):
         filas += f'<div class="entrada"><h3>{cab}</h3><p class="sub">{sub}</p>{"<ul>"+li+"</ul>" if li else ""}</div>'
     return f'<section class="cv-bloque tipo-{tipo}"><h2>{titulo}</h2>{filas}</section>'
 
-def cv():
-    PJ = "/proyectos/"
-    c = f'''<section class="interior tipo-datos"><h1>CV</h1><p class="ppregunta">{e(BIO)}</p><div class="pills"><a class="pill pill-fuerte" href="{CV_PDF}">Descargar PDF <span aria-hidden="true">↗</span></a></div></section>
-<div class="cv">''' + bloque("Experiencia en investigación","ia",[
-  (L("Innovations for Poverty Action (IPA) Perú","https://www.poverty-action.org/peru"),"Practicante de Investigación · ago. 2026 - presente",[
+def cv_es(PJ):
+    return [
+ ("Experiencia en investigación","ia",[
+  (L("Innovations for Poverty Action (IPA) Perú",PJ+"ra-ipa/"),"Practicante de Investigación · ago. 2026 - presente",[
     "Apoyo en una evaluación de impacto (RCT) sobre capital semilla para microemprendimientos: actualización de reportes en LaTeX para los investigadores principales y control de referencias de tablas.",
     "Desarrollo de proyectos: fortalecimiento de la matriz de emparejamiento entre ideas de investigación y fondos, y notas conceptuales para donantes.",
     "Apoyo en un piloto cualitativo con gobiernos locales (entrevistas semiestructuradas y notas de campo)."]),
-  ("Departamento de Economía, PUCP",f'Asistente de Investigación, Profs. Isabel Guerrero y {L("Fabiola Alba-Vivar","https://fabiolaalbavivar.com/")} · mar. 2026 - ago. 2026',[
+  (L("Departamento de Economía, PUCP",PJ+"ra-guerrero/"),f'Asistente de Investigación, Profs. Isabel Guerrero y {L("Fabiola Alba-Vivar","https://fabiolaalbavivar.com/")} · mar. 2026 - ago. 2026',[
     L("Auditoría de 118 variables del Luxembourg Income Study",PJ+"lis-dashboard/")+" en 1,060 bases de 54 países para un estudio sobre pensiones no contributivas y gasto de bolsillo en salud; dashboard web de disponibilidad de variables.",
     "Análisis de datos de movilidad urbana, educación y bienestar con econometría y geolocalización en Python.",
     "Revisión sistemática de literatura y análisis mixto para diagnósticos económicos."]),
-  ("PUCP","Asistente de Investigación, Prof. Pedro Francke · dic. 2025 - mar. 2026",["Procesamiento de microdatos censales en Stata y modelos econométricos sobre maternidad infantil e interseccionalidad."]),
+  (L("PUCP",PJ+"ra-francke/"),"Asistente de Investigación, Prof. Pedro Francke · dic. 2025 - mar. 2026",["Procesamiento de microdatos censales en Stata y modelos econométricos sobre maternidad infantil e interseccionalidad."]),
   ("PUCP","Asistente de Investigación · ago. 2025 - nov. 2025",["Revisión de literatura y marco teórico sobre liderazgo político femenino y violencia contra la mujer."]),
- ]) + bloque("Educación","datos",[
+ ]),
+ ("Educación","datos",[
   (L("Pontificia Universidad Católica del Perú (PUCP)","https://www.pucp.edu.pe/"),"Bachillerato en Economía · 2021 - presente (último ciclo, 2026-2; término de cursos previsto: dic. 2026)",[
     "Cursos relevantes: Microeconometría Intermedia, Economía Pública, Pobreza, Desigualdad y Políticas Sociales, Finanzas Corporativas, Regulación Financiera, Temas de Desarrollo Económico, Temas en Políticas Públicas y Gestión Pública.",
     L("Tesis",PJ+"tesis-proveedor-salud/")+': "Factores asociados a la elección de proveedor de salud ante un episodio de morbilidad: evidencia a partir de la ENAHO Panel (2022-2024)". Asesor: Pedro Francke.']),
   (L("Q-LAB PUCP","https://qlab.pucp.edu.pe/"),"Diplomatura de Especialización en Ciencia de Datos para las Ciencias Sociales y Gestión Pública · ago. 2026 - abr. 2027 (en curso)",["Cursos: Fundamentos de Python, Fundamentos de R, Estadística para Ciencia de Datos, Matemática para Ciencia de Datos, entre otros."]),
   ("Q-LAB PUCP, Summer School de Métodos Cuantitativos","ene. - feb. 2025",[
     "Econometría Aplicada Avanzada (32 h; Rubin, DiD, IV, control sintético, RDD). Nota 16.","Introducción a Machine Learning para CCSS y Gestión Pública (32 h). Nota 16.","Machine Learning para Macroeconomía (32 h; series de tiempo, deep learning). Nota 16.","Fundamentos de Programación en Python (16 h). Nota 18."]),
- ]) + bloque("Consultoría, emprendimiento y liderazgo","imp",[
+ ]),
+ ("Consultoría, emprendimiento y liderazgo","imp",[
   (L("180 Degrees Consulting PUCP",PJ+"180dc-gestion/"),"Consultora y directora de finanzas · ago. 2025 - presente",[
     "Consultora de estrategia del proyecto "+L("Sálvame Pucallpa","https://www.instagram.com/salvamepucallpa/")+" (ciclo 2025-2): diagnóstico organizacional y estrategia de recaudación de fondos para una ONG.",
     "Directora de finanzas: organización de una rifa pro fondos y de los talleres "+L("Conexión 180","https://www.instagram.com/p/DaGVMIxEdIf/")+".",
@@ -408,36 +487,53 @@ def cv():
   (L("Laboratorio de Estudios Sociales (LES), PUCP",PJ+"elecciones-edicion-les/"),"Coordinadora de Investigación Académica · mar. 2025 - presente",["Líneas de investigación sobre "+L("pobreza de tiempo y género",PJ+"pobreza-de-tiempo/")+"; supervisión de publicaciones estudiantiles; traducción de resultados técnicos a notas de política."]),
   ("ID-One","Responsable de Finanzas y Modelo de Negocio · 2026 - presente",["Startup B2B de verificación de identidad digital; costos unitarios por verificación y modelo de negocio. Programa de incubación NEXPRO 2026-2 (NEXUM, CIDE PUCP)."]),
   (L("Rikuy Salud",PJ+"rikuy-salud/"),"Cofundadora · 2026",["Idea de app para orientar a pacientes en el sistema de salud público peruano (datos abiertos de RENIPRESS y SUSALUD). Laboratorio de Emprendimientos 2026, EQUIPU PUCP. Equipo de cinco personas."]),
- ]) + bloque("Reconocimientos","inv",[("Premios y puestos","",[
+ ]),
+ ("Reconocimientos","inv",[("Premios y puestos","",[
     "2025 · Primer puesto (1/87), Seminario de Tesis 1, PUCP. Nota 18.","2025 · Primer puesto (1/44), Laboratorio de Programación: R y Python, PUCP. Nota 18.",
     "2025 · Finalista global (top 14), Project Green Challenge, "+L("Turning Green","https://turninggreen.org/")+".","2024 · Primer puesto (1/14), Laboratorio de Escritura Académica, PUCP. Nota 17.",
-    '2024 · Participante, "Menos barreras, más competencia", INDECOPI.',"2024 · Editatón 2024-2 (Wikipedia, PUCP): mejora de contenidos de economía de género."])
- ]) + bloque("Voluntariado y trabajo de campo","datos",[("Campo y comunidad","",[
+    '2024 · Participante, "Menos barreras, más competencia", INDECOPI.',"2024 · Editatón 2024-2 (Wikipedia, PUCP): mejora de contenidos de economía de género."])]),
+ ("Voluntariado y trabajo de campo","datos",[("Campo y comunidad","",[
     "Dirección de Responsabilidad Social y Desarrollo Sostenible, PUCP. Levantamiento de datos socioeconómicos y de riesgo de desastres en el torrente de Quirio. ago. - nov. 2025 (15 h de campo).",
     "Universitarios sin Fronteras. Encuestadora y asistente de campo, 2024. Programación del instrumento en ODK/SurveyCTO, aleatorización espacial y chequeos de consistencia.",
     "RSU PUCP. Facilitadora de alfabetización digital para adultos mayores, 2024.",
-    "Asociación de Estudiantes de Economía (AEE) PUCP. Organización de eventos y talleres; talleres de economía para escolares, 2022 - 2024."])
- ]) + bloque("Cursos y habilidades","ia",[("Cursos y certificados","",[
+    "Asociación de Estudiantes de Economía (AEE) PUCP. Organización de eventos y talleres; talleres de economía para escolares, 2022 - 2024."])]),
+ ("Cursos y habilidades","ia",[("Cursos y certificados","",[
     "Excel Avanzado: Macros, INFOPUCP, feb. 2025, 24 h, nota 20.","Taller de Programación en Economía Experimental, LEEX-PUCP, E2LabUP y CREE-UDEP, feb. - mar. 2025, 25 h.","Taller de Programación en Stata aplicado a CCSS, Q-LAB PUCP, 2025-1, 10 h."]),
    ("Habilidades","",[
     "Datos: Stata (avanzado), R (tidyverse, Quarto), Python (pandas, NumPy), SQL, Excel/VBA.","Métodos: RCT, DiD, IV, RDD, control sintético, logit multinomial con panel (Mundlak), ML supervisado y no supervisado, series de tiempo.",
-    "Campo: SurveyCTO, ODK, KoBoToolbox, controles de calidad (HFC, back checks).","Reporte: LaTeX/Overleaf, Quarto, GitHub Actions, Claude Code con skills y MCP.","Idiomas: español nativo; inglés intermedio."])
- ]) + "</div>"
+    "Campo: SurveyCTO, ODK, KoBoToolbox, controles de calidad (HFC, back checks).","Reporte: LaTeX/Overleaf, Quarto, GitHub Actions, Claude Code con skills y MCP.","Idiomas: español nativo; inglés intermedio."])]),
+    ]
+
+def cv():
+    PJ = "/proyectos/"
+    datos = cv_es(PJ) if LANG == "es" else EN.cv_bloques(PJ, None)
+    c = f'<section class="interior tipo-datos"><h1>CV</h1><p class="ppregunta">{e(BIOT())}</p><div class="pills"><a class="pill pill-fuerte" href="{CV_PDF}">{U("cv_bajar")}</a></div></section><div class="cv">' + "".join(bloque(*b) for b in datos) + "</div>"
     return pagina("/cv/", "CV", c)
 
+def localizar(h):
+    """En ingles, los links internos apuntan a /en/ salvo el selector de idioma, imagenes y archivos."""
+    if LANG == "es":
+        return h
+    h = re.sub(r'(<a (?![^>]*data-fijo)[^>]*href=")/(proyectos/|publicaciones/|cv/|#|")', lambda m: m.group(1) + "/en/" + m.group(2), h)
+    return h
+
 def escribir(ruta, contenido):
-    p = os.path.join(DOCS, ruta.strip("/"), "index.html") if not ruta.endswith(".html") else os.path.join(DOCS, ruta.strip("/"))
+    base = DOCS if LANG == "es" else os.path.join(DOCS, "en")
+    p = os.path.join(base, ruta.strip("/")) if ruta.endswith(".html") else os.path.join(base, ruta.strip("/"), "index.html")
     os.makedirs(os.path.dirname(p), exist_ok=True)
     with open(p, "w", encoding="utf-8", newline="\n") as f:
-        f.write(contenido)
+        f.write(localizar(contenido))
 
-if os.path.isdir(os.path.join(DOCS, "proyectos")):
-    shutil.rmtree(os.path.join(DOCS, "proyectos"))
-escribir("/", inicio())
-for i, p in enumerate(PROYECTOS):
-    escribir(f'/proyectos/{p["slug"]}/', proyecto(p, i))
-escribir("/publicaciones/", publicaciones())
-escribir("/cv/", cv())
-escribir("/404.html", pagina("/404.html", "Página no encontrada", '<section class="interior tipo-inv"><h1>Esta página no existe</h1><div class="pills"><a class="pill pill-fuerte" href="/">Volver al inicio</a></div></section>'))
+for d in ("proyectos", "en"):
+    if os.path.isdir(os.path.join(DOCS, d)):
+        shutil.rmtree(os.path.join(DOCS, d))
+for LANG in ("es", "en"):
+    escribir("/", inicio())
+    for i, p in enumerate(PROYECTOS):
+        escribir(f'/proyectos/{p["slug"]}/', proyecto(p, i))
+    escribir("/publicaciones/", publicaciones())
+    escribir("/cv/", cv())
+LANG = "es"
+escribir("/404.html", pagina("/404.html", "Página no encontrada", f'<section class="interior tipo-inv"><h1>{U("no_existe")}</h1><div class="pills"><a class="pill pill-fuerte" href="/">{U("volver")}</a></div></section>'))
 open(os.path.join(DOCS, ".nojekyll"), "w").close()
-print("Sitio generado en", DOCS, "con", len(PROYECTOS), "proyectos")
+print("Sitio generado en", DOCS, "con", len(PROYECTOS), "proyectos en español e inglés")
